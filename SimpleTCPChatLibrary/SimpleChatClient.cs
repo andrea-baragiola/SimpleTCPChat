@@ -7,6 +7,12 @@ public class SimpleChatClient
     private TcpClient tcpClient;
     private StreamReader reader;
     private StreamWriter writer;
+    public string Name { get; }
+
+    public SimpleChatClient(string name)
+    {
+        Name = name;
+    }
 
     // Evento per gestire i messaggi ricevuti
     public event Action<string> MessageReceived;

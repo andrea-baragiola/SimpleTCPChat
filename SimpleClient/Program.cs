@@ -6,7 +6,10 @@ using SimpleTCPChatLibrary;
 //string serverIp = Console.ReadLine();
 string serverIp = "127.0.0.1";
 
-SimpleChatClient chatClient = new SimpleChatClient();
+Console.Write("Inserisci tuo nome: ");
+string name = Console.ReadLine();
+
+SimpleChatClient chatClient = new(name);
 chatClient.MessageReceived += (message) => Console.WriteLine(message);
 
 // Connessione al server
