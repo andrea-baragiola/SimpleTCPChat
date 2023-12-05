@@ -19,7 +19,7 @@ namespace SimpleTCPChatLibrary
 
             while (true)
             {
-                TcpClient client = tcpListener.AcceptTcpClient();
+                TcpClient client = tcpListener.AcceptTcpClient();  // stato base del server
                 clients.Add(client);
 
                 // Gestisci il client in un thread separato
