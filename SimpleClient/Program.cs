@@ -1,6 +1,6 @@
 ﻿// Client
 using System;
-using SimpleTCPChatLibrary;
+using SimpleClient;
 
 //Console.Write("Inserisci l'indirizzo IP del server: ");
 //string serverIp = Console.ReadLine();

@@ -1,6 +1,6 @@
 ﻿using System.Net.Sockets;
 
-namespace SimpleTCPChatLibrary;
+namespace SimpleClient;
 
 public class SimpleChatClient
 {
