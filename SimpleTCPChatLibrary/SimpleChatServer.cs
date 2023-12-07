@@ -23,31 +23,31 @@ namespace SimpleTCPChatLibrary
                 clients.Add(client);
 
                 // Gestisci il client in un thread separato
-                Task.Run(() => HandleClientAsync(client));
+                Task.Run(() => HandleClient(client));
             }
         }
 
-        private async Task HandleClientAsync(TcpClient client)
+        private void HandleClient(TcpClient client)
         {
             StreamReader reader = new StreamReader(client.GetStream());
-            StreamWriter writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
+            //StreamWriter writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
 
-            writer.WriteLine("Benvenuto nella chat!");
+            //writer.WriteLine("Benvenuto nella chat!");
 
             while (client.Connected)
             {
-                string message = await reader.ReadLineAsync();
+                string message = reader.ReadLine();
                 if (message == null)
                     break;
 
-                await OnMessageReceivedAsync(message);
+                OnMessageReceived(message);
             }
 
             clients.Remove(client);
             client.Close();
         }
 
-        private async Task OnMessageReceivedAsync(string message)
+        private void OnMessageReceived(string message)
         {
             MessageReceived?.Invoke(message);
 
@@ -55,7 +55,7 @@ namespace SimpleTCPChatLibrary
             foreach (TcpClient client in clients)
             {
                 StreamWriter writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
-                await writer.WriteLineAsync(message);
+                writer.WriteLineAsync(message);
             }
         }
     }

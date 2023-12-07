@@ -24,15 +24,15 @@ public class SimpleChatClient
         reader = new StreamReader(tcpClient.GetStream());
         writer = new StreamWriter(tcpClient.GetStream()) { AutoFlush = true };
 
-        // Leggi il messaggio di benvenuto
-        string welcomeMessage = reader.ReadLine();
-        OnMessageReceived(welcomeMessage);
+        //// Leggi il messaggio di benvenuto
+        //string welcomeMessage = reader.ReadLine();
+        //OnMessageReceived(welcomeMessage);
     }
 
     public void SendMessage(string message)
     {
         // Invia il messaggio al server
-        writer.WriteLine(message);
+        writer.WriteLine($"{Name}: {message}");
     }
 
     public void StartListening()
