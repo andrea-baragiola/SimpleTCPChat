@@ -8,10 +8,12 @@ public class SimpleChatClient
     private StreamReader reader;
     private StreamWriter writer;
     public string Name { get; }
+    public int ChatRoomId { get; set; }
 
-    public SimpleChatClient(string name)
+    public SimpleChatClient(string name, int chatRoomId)
     {
         Name = name;
+        ChatRoomId = chatRoomId;
     }
 
     // Evento per gestire i messaggi ricevuti

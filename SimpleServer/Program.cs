@@ -1,4 +1,5 @@
-﻿using SimpleServer;
+﻿// Server
+using SimpleServer;
 
 SimpleChatServer chatServer = new SimpleChatServer();
 chatServer.MessageReceived += (message) => Console.WriteLine(message);

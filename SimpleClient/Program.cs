@@ -1,20 +1,18 @@
 ﻿// Client
-using System;
 using SimpleClient;
 
-//Console.Write("Inserisci l'indirizzo IP del server: ");
-//string serverIp = Console.ReadLine();
 string serverIp = "127.0.0.1";
 
 Console.Write("Inserisci tuo nome: ");
 string name = Console.ReadLine();
 
-SimpleChatClient chatClient = new(name);
+Console.Write("Inserisci ID della chatroom: ");
+int id = int.Parse(Console.ReadLine());
+
+SimpleChatClient chatClient = new(name, id);
 chatClient.MessageReceived += (message) =>
 {
-    //ClearLastLine();
     Console.WriteLine(message);
-
 };
 
 // Connessione al server
@@ -39,7 +37,6 @@ static void ClearLastLine()
 
 static string GrabMessageFromUser()
 {
-    //Console.Write("Scrivi Messaggio: ");
     string newMessage = Console.ReadLine();
     ClearLastLine();
     return newMessage;
