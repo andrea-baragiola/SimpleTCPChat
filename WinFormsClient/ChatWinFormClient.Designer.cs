@@ -31,6 +31,7 @@
             sendButton = new Button();
             messageListTextBox = new RichTextBox();
             messageToSendTextBox = new RichTextBox();
+            nameTextBox = new TextBox();
             SuspendLayout();
             // 
             // sendButton
@@ -59,17 +60,27 @@
             messageToSendTextBox.TabIndex = 2;
             messageToSendTextBox.Text = "";
             // 
+            // nameTextBox
+            // 
+            nameTextBox.Location = new Point(165, 19);
+            nameTextBox.Name = "nameTextBox";
+            nameTextBox.Size = new Size(100, 23);
+            nameTextBox.TabIndex = 3;
+            nameTextBox.Text = "Anonimo";
+            // 
             // ChatWinFormClient
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(nameTextBox);
             Controls.Add(messageToSendTextBox);
             Controls.Add(messageListTextBox);
             Controls.Add(sendButton);
             Name = "ChatWinFormClient";
             Text = "WinFormChatClient";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -77,5 +88,6 @@
         private Button sendButton;
         private RichTextBox messageListTextBox;
         private RichTextBox messageToSendTextBox;
+        private TextBox nameTextBox;
     }
 }

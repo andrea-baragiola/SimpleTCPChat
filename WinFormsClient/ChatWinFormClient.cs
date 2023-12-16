@@ -29,7 +29,7 @@ namespace WinFormsClient
 
         private void sendButton_Click(object sender, EventArgs e)
         {
-            string messageSender = "andrea";
+            string messageSender = nameTextBox.Text;
             string messageContent = messageToSendTextBox.Text;
             Message message = new(messageSender, messageContent);
 
