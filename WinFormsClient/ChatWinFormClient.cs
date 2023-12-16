@@ -15,7 +15,7 @@ namespace WinFormsClient
             InitializeComponent();
 
             timer = new();
-            timer.Interval = 5000;
+            timer.Interval = 3000;
             timer.Tick += Timer_Tick;
 
             // Start the timer
@@ -29,17 +29,17 @@ namespace WinFormsClient
 
         private void sendButton_Click(object sender, EventArgs e)
         {
-            // Create a JSON object with the correct structure
-            var messageModel = new { Message = messageToSendTextBox.Text };
-            string requestBody = JsonSerializer.Serialize(messageModel);
+            string messageSender = "andrea";
+            string messageContent = messageToSendTextBox.Text;
+            Message message = new(messageSender, messageContent);
 
-            // Specify the API endpoint
+            string requestBody = JsonSerializer.Serialize(message);
+
             string postUrl = "https://localhost:7236/api/Chat/post";
 
-            // Send the POST request
             using (HttpClient client = new HttpClient())
             {
-                var content = new StringContent($"\"{messageToSendTextBox.Text}\"", System.Text.Encoding.UTF8, "application/json");
+                var content = new StringContent(requestBody, System.Text.Encoding.UTF8, "application/json");
                 HttpResponseMessage response = client.PostAsync(postUrl, content).Result;
 
                 if (!response.IsSuccessStatusCode)
@@ -48,11 +48,12 @@ namespace WinFormsClient
                     Debug.WriteLine($"Error: {response.StatusCode} - {errorMessage}");
                 }
             }
+            messageToSendTextBox.Text = string.Empty;
+
         }
 
         private void UpdateChat()
         {
-            //messageListTextBox.Text = messageListTextBox.Text + "mex recuperati" + "\n";
             string getAllUrl = "https://localhost:7236/api/Chat/all";
 
             using (HttpClient client = new HttpClient())
@@ -65,7 +66,7 @@ namespace WinFormsClient
                     List<string>? messages = JsonSerializer.Deserialize<List<string>>(responseData);
                     if (messages != null)
                     {
-                        messageListTextBox.Text = string.Join("/n", messages);
+                        messageListTextBox.Text = string.Join("\n", messages);
                     }
                 }
             }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApiServer.Models;
 
 
 namespace WebApiServer.Controllers
@@ -22,9 +23,9 @@ namespace WebApiServer.Controllers
         }
 
         [HttpPost("post")]
-        public ActionResult PostMessage([FromBody] string message)
+        public ActionResult PostMessage([FromBody] Message message)
         {
-            _chatStorage.AllMessages.Add(message);
+            _chatStorage.AllMessages.Add($"{message.MessageSender}: {message.Content}");
             return Ok();
         }
     }
