@@ -17,7 +17,7 @@ foreach (string message in chatClient.Messages)
 
 
 // Avvia il thread per eseguire la GET request ogni 2 secondi
-Thread getRequestThread = new Thread(() => PerformGetRequestEveryTwoSeconds(chatClient));
+Thread getRequestThread = new Thread(() => PerformGetRequestEveryFiveSeconds(chatClient));
 getRequestThread.Start();
 
 
@@ -31,7 +31,7 @@ sendMessagesThread.Start();
 // ---------------------------------------------
 // ---------------------------------------------
 
-static void PerformGetRequestEveryTwoSeconds(SimpleChatClient chatClient)
+static void PerformGetRequestEveryFiveSeconds(SimpleChatClient chatClient)
 {
     while (true)
     {
@@ -41,7 +41,7 @@ static void PerformGetRequestEveryTwoSeconds(SimpleChatClient chatClient)
         {
             Console.WriteLine(message);
         }
-        Thread.Sleep(2000);
+        Thread.Sleep(5000);
     }
 }
 

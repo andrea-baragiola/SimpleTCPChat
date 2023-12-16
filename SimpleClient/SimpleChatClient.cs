@@ -22,32 +22,26 @@ public class SimpleChatClient
         PopulateMessages();
     }
 
-    // Evento per gestire i messaggi ricevuti
-    public event Action<string> MessageReceived;
-
-
     public void SendMessage(string message) // manda messaggio al server con metodo POST
     {
-        string apiUrl = $"{BaseUrl}/post";
         string requestBody = message;
 
         using (HttpClient client = new HttpClient())
         {
             StringContent content = new StringContent(requestBody, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = client.PostAsync(apiUrl, content).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string responseData = response.Content.ReadAsStringAsync().Result;
-            }
+            HttpResponseMessage response = client.PostAsync($"{BaseUrl}/post", content).Result;
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    string responseData = response.Content.ReadAsStringAsync().Result;
+            //}
         }
     }
-    public void PopulateMessages()
-    {
-        string apiUrl = $"{BaseUrl}/all";
 
+    public void PopulateMessages() // get request to get all messages
+    {
         using (HttpClient client = new HttpClient())
         {
-            HttpResponseMessage response = client.GetAsync(apiUrl).Result;
+            HttpResponseMessage response = client.GetAsync($"{BaseUrl}/all").Result;
 
             if (response.IsSuccessStatusCode)
             {
@@ -63,11 +57,9 @@ public class SimpleChatClient
 
     public void AddNewMessages()
     {
-        string apiUrl = $"{BaseUrl}/new";
-
         using (HttpClient client = new HttpClient())
         {
-            HttpResponseMessage response = client.GetAsync(apiUrl).Result;
+            HttpResponseMessage response = client.GetAsync($"{BaseUrl}/new").Result;
 
             if (response.IsSuccessStatusCode)
             {
@@ -79,24 +71,5 @@ public class SimpleChatClient
                 }
             }
         }
-    }
-
-    //public void StartListening()
-    //{
-    //    // Loop per ricevere e gestire i messaggi dal server
-    //    while (tcpClient.Connected)
-    //    {
-    //        string receivedMessage = reader.ReadLine();
-    //        if (receivedMessage == null)
-    //            break;
-
-    //        OnMessageReceived(receivedMessage);
-    //    }
-    //}
-
-    private void OnMessageReceived(string message)
-    {
-        // Richiama l'evento per gestire il messaggio ricevuto
-        MessageReceived?.Invoke(message);
     }
 }
