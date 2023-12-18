@@ -9,25 +9,29 @@ namespace WinFormsClient
 {
     public partial class ChatWinFormClient : Form
     {
+        public int RoomId { get; set; }
+        public string SenderName { get; set; }
         private System.Windows.Forms.Timer timer;
-        public ChatWinFormClient()
+        public ChatWinFormClient(int roomId, string senderName)
         {
             InitializeComponent();
-
             timer = new();
             timer.Interval = 1000;
             timer.Tick += TimerTick;
             timer.Start();
+            RoomId = roomId;
+            SenderName = senderName;
+            senderNameLabel.Text = SenderName;
         }
 
         private void TimerTick(object sender, EventArgs e)
         {
-            UpdateChat();
+            //UpdateChat();
         }
 
         private void sendButton_Click(object sender, EventArgs e)
         {
-            string messageSender = nameTextBox.Text;
+            string messageSender = senderNameLabel.Text;
             string messageContent = messageToSendTextBox.Text;
             SendMessage(messageSender, messageContent);
             messageToSendTextBox.Text = string.Empty;
