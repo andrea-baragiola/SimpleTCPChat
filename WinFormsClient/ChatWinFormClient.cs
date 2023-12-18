@@ -23,18 +23,18 @@ namespace WinFormsClient
 
         private void TimerTick(object sender, EventArgs e)
         {
-            UpdateChat();
+            UpdateChatAsync();
         }
 
         private void sendButton_Click(object sender, EventArgs e)
         {
             string messageSender = senderNameLabel.Text;
             string messageContent = messageToSendTextBox.Text;
-            SendMessage(messageSender, messageContent);
+            SendMessageAsync(messageSender, messageContent);
             messageToSendTextBox.Text = string.Empty;
         }
 
-        private void SendMessage(string messageSender, string messageContent)
+        private async Task SendMessageAsync(string messageSender, string messageContent)
         {
             ClientMessage message = new(messageSender, messageContent, RoomId);
 
@@ -44,17 +44,19 @@ namespace WinFormsClient
             using (HttpClient client = new HttpClient())
             {
                 var content = new StringContent(requestBody, System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = client.PostAsync(postUrl, content).Result;
+                HttpResponseMessage response = await client.PostAsync(postUrl, content);
 
-                if (!response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
-                    string errorMessage = response.Content.ReadAsStringAsync().Result;
-                    Debug.WriteLine($"Error: {response.StatusCode} - {errorMessage}");
+                    await Task.Delay(5000);
+                    informationLabel.Text = "message sent and received by the server";
+                    await Task.Delay(2000);
+                    informationLabel.Text = string.Empty;
                 }
             }
         }
 
-        private void UpdateChat()
+        private async Task UpdateChatAsync()
         {
             string getAllUrl = $"https://localhost:7236/api/Chat/{RoomId}";
 
@@ -64,7 +66,7 @@ namespace WinFormsClient
 
                 if (response.IsSuccessStatusCode)
                 {
-                    string responseData = response.Content.ReadAsStringAsync().Result;
+                    string responseData = await response.Content.ReadAsStringAsync();
                     List<string>? messages = JsonSerializer.Deserialize<List<string>>(responseData);
                     if (messages != null)
                     {
@@ -72,6 +74,7 @@ namespace WinFormsClient
                     }
                 }
             }
+
         }
     }
 }
