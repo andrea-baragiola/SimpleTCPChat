@@ -15,14 +15,12 @@ namespace WinFormsClient
             InitializeComponent();
 
             timer = new();
-            timer.Interval = 3000;
-            timer.Tick += Timer_Tick;
-
-            // Start the timer
+            timer.Interval = 1000;
+            timer.Tick += TimerTick;
             timer.Start();
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
+        private void TimerTick(object sender, EventArgs e)
         {
             UpdateChat();
         }
@@ -31,10 +29,15 @@ namespace WinFormsClient
         {
             string messageSender = nameTextBox.Text;
             string messageContent = messageToSendTextBox.Text;
+            SendMessage(messageSender, messageContent);
+            messageToSendTextBox.Text = string.Empty;
+        }
+
+        private void SendMessage(string messageSender, string messageContent)
+        {
             Message message = new(messageSender, messageContent);
 
             string requestBody = JsonSerializer.Serialize(message);
-
             string postUrl = "https://localhost:7236/api/Chat/post";
 
             using (HttpClient client = new HttpClient())
@@ -48,8 +51,6 @@ namespace WinFormsClient
                     Debug.WriteLine($"Error: {response.StatusCode} - {errorMessage}");
                 }
             }
-            messageToSendTextBox.Text = string.Empty;
-
         }
 
         private void UpdateChat()
