@@ -1,7 +1,6 @@
 ﻿using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
-using static System.Net.WebRequestMethods;
 
 namespace SimpleClient;
 

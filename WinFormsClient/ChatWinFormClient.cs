@@ -1,9 +1,6 @@
-using System.Text;
 using System.Text.Json;
-using System.Windows.Forms;
-using System.Text.Json.Serialization;
-using System.Runtime.CompilerServices;
 using System.Diagnostics;
+using WinFormsClient.Models;
 
 namespace WinFormsClient
 {
@@ -26,7 +23,7 @@ namespace WinFormsClient
 
         private void TimerTick(object sender, EventArgs e)
         {
-            //UpdateChat();
+            UpdateChat();
         }
 
         private void sendButton_Click(object sender, EventArgs e)
@@ -39,7 +36,7 @@ namespace WinFormsClient
 
         private void SendMessage(string messageSender, string messageContent)
         {
-            Message message = new(messageSender, messageContent);
+            ClientMessage message = new(messageSender, messageContent, RoomId);
 
             string requestBody = JsonSerializer.Serialize(message);
             string postUrl = "https://localhost:7236/api/Chat/post";
@@ -59,7 +56,7 @@ namespace WinFormsClient
 
         private void UpdateChat()
         {
-            string getAllUrl = "https://localhost:7236/api/Chat/all";
+            string getAllUrl = $"https://localhost:7236/api/Chat/{RoomId}";
 
             using (HttpClient client = new HttpClient())
             {

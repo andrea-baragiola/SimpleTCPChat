@@ -16,16 +16,17 @@ namespace WebApiServer.Controllers
             _chatStorage = chatStorage;
         }
 
-        [HttpGet("all")]
-        public ActionResult<IEnumerable<string>> GetMessages()
+        [HttpGet("{roomId}")]
+        public ActionResult<IEnumerable<string>> GetMessages(int roomId)
         {
-            return Ok(_chatStorage.AllMessages);
+            return Ok(_chatStorage.ChatRoomDict[roomId].AllMessages);
         }
+
 
         [HttpPost("post")]
         public ActionResult PostMessage([FromBody] Message message)
         {
-            _chatStorage.AllMessages.Add($"{message.MessageSender}: {message.Content}");
+            _chatStorage.ChatRoomDict[message.TargetRoomId].AllMessages.Add($"{message.MessageSender}: {message.Content}");
             return Ok();
         }
     }

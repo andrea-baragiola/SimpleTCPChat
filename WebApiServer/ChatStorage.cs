@@ -2,7 +2,16 @@
 {
     public class ChatStorage : IChatStorage
     {
-        public List<string> AllMessages { get; set; } = new();
-        public List<string> NewMessages { get; set; } = new();
+
+        public Dictionary<int, ChatRoom> ChatRoomDict { get; set; }
+        public ChatStorage()
+        {
+            ChatRoomDict = new()
+            {
+                { 1, new ChatRoom() },
+                { 2, new ChatRoom() }
+            };
+
+        }
     }
 }

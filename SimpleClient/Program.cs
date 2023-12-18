@@ -1,5 +1,4 @@
 ﻿// Client
-using System;
 using SimpleClient;
 
 // chiedere informazioni

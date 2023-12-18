@@ -2,7 +2,7 @@
 {
     public interface IChatStorage
     {
-        List<string> AllMessages { get; set; }
-        List<string> NewMessages { get; set; }
+        Dictionary<int, ChatRoom> ChatRoomDict { get; set; }
+
     }
 }
