@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApiServer.Models;
+using WebApiServer.Storage;
 
 
 namespace WebApiServer.Controllers
@@ -26,7 +27,7 @@ namespace WebApiServer.Controllers
         [HttpPost("post")]
         public ActionResult PostMessage([FromBody] Message message)
         {
-            _chatStorage.ChatRoomDict[message.TargetRoomId].AllMessages.Add($"{message.MessageSender}: {message.Content}");
+            _chatStorage.ChatRoomDict[message.TargetRoomId].AllMessages.Add($"{message.MessageSender} :  {message.Content}");
             return Ok();
         }
     }

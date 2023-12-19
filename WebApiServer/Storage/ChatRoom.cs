@@ -1,4 +1,4 @@
-﻿namespace WebApiServer
+﻿namespace WebApiServer.Storage
 {
     public class ChatRoom
     {
