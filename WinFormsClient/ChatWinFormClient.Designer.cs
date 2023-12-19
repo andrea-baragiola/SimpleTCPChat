@@ -32,10 +32,8 @@
             messageListTextBox = new RichTextBox();
             messageToSendTextBox = new RichTextBox();
             senderNameLabel = new Label();
-            logTextBox = new RichTextBox();
-            logLabel = new Label();
             chatLabel = new Label();
-            informationLabel = new Label();
+            confirmationMessageLabel = new Label();
             SuspendLayout();
             // 
             // sendButton
@@ -73,23 +71,6 @@
             senderNameLabel.TabIndex = 3;
             senderNameLabel.Text = "defaultToBeChanged";
             // 
-            // logTextBox
-            // 
-            logTextBox.Location = new Point(465, 48);
-            logTextBox.Name = "logTextBox";
-            logTextBox.Size = new Size(286, 214);
-            logTextBox.TabIndex = 4;
-            logTextBox.Text = "";
-            // 
-            // logLabel
-            // 
-            logLabel.AutoSize = true;
-            logLabel.Location = new Point(465, 30);
-            logLabel.Name = "logLabel";
-            logLabel.Size = new Size(27, 15);
-            logLabel.TabIndex = 5;
-            logLabel.Text = "Log";
-            // 
             // chatLabel
             // 
             chatLabel.AutoSize = true;
@@ -99,23 +80,22 @@
             chatLabel.TabIndex = 6;
             chatLabel.Text = "Chat";
             // 
-            // informationLabel
+            // confirmationMessageLabel
             // 
-            informationLabel.AutoSize = true;
-            informationLabel.Location = new Point(24, 358);
-            informationLabel.Name = "informationLabel";
-            informationLabel.Size = new Size(0, 15);
-            informationLabel.TabIndex = 7;
+            confirmationMessageLabel.AutoSize = true;
+            confirmationMessageLabel.Location = new Point(24, 358);
+            confirmationMessageLabel.Name = "confirmationMessageLabel";
+            confirmationMessageLabel.Size = new Size(31, 15);
+            confirmationMessageLabel.TabIndex = 7;
+            confirmationMessageLabel.Text = "        ";
             // 
             // ChatWinFormClient
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(informationLabel);
+            Controls.Add(confirmationMessageLabel);
             Controls.Add(chatLabel);
-            Controls.Add(logLabel);
-            Controls.Add(logTextBox);
             Controls.Add(senderNameLabel);
             Controls.Add(messageToSendTextBox);
             Controls.Add(messageListTextBox);
@@ -132,9 +112,7 @@
         private RichTextBox messageListTextBox;
         private RichTextBox messageToSendTextBox;
         private Label senderNameLabel;
-        private RichTextBox logTextBox;
-        private Label logLabel;
         private Label chatLabel;
-        private Label informationLabel;
+        private Label confirmationMessageLabel;
     }
 }

@@ -1,29 +1,37 @@
 using System.Text.Json;
-using System.Diagnostics;
-using WinFormsClient.Models;
+using WinFormsClient.APIClient;
 
 namespace WinFormsClient
 {
     public partial class ChatWinFormClient : Form
     {
-        public int RoomId { get; set; }
+
+        private readonly System.Windows.Forms.Timer _timer;
+        private readonly ChatAPIClient _chatAPIClient;
+
         public string SenderName { get; set; }
-        private System.Windows.Forms.Timer timer;
+
         public ChatWinFormClient(int roomId, string senderName)
         {
             InitializeComponent();
-            timer = new();
-            timer.Interval = 1000;
-            timer.Tick += TimerTick;
-            timer.Start();
-            RoomId = roomId;
+            _chatAPIClient = new(roomId); // instatiate API client related to a specific room
             SenderName = senderName;
             senderNameLabel.Text = SenderName;
+            _timer = new();
+            ActivateTimer(); 
+        }
+
+        // Starts the timer that will trigger the periodic update of the chat
+        private void ActivateTimer()
+        {
+            _timer.Interval = 1000;
+            _timer.Tick += TimerTick;
+            _timer.Start();
         }
 
         private void TimerTick(object sender, EventArgs e)
         {
-            UpdateChatAsync();
+            RefreshChatAsync();
         }
 
         private void sendButton_Click(object sender, EventArgs e)
@@ -34,47 +42,34 @@ namespace WinFormsClient
             messageToSendTextBox.Text = string.Empty;
         }
 
+        // Reloads the messages of the chat
+        private async Task RefreshChatAsync()
+        {
+            HttpResponseMessage response = await _chatAPIClient.GetMessagesAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                string responseData = await response.Content.ReadAsStringAsync();
+                List<string>? messages = JsonSerializer.Deserialize<List<string>>(responseData);
+                if (messages != null)
+                {
+                    messageListTextBox.Text = string.Join("\n", messages);
+                }
+            }
+        }
+
         private async Task SendMessageAsync(string messageSender, string messageContent)
         {
-            ClientMessage message = new(messageSender, messageContent, RoomId);
-
-            string requestBody = JsonSerializer.Serialize(message);
-            string postUrl = "https://localhost:7236/api/Chat/post";
-
-            using (HttpClient client = new HttpClient())
+            HttpResponseMessage response = await _chatAPIClient.SendAsync(messageSender, messageContent);
+            if (response.IsSuccessStatusCode)  // provides delayed confirmation of sent message, without interrupting the main thread
             {
-                var content = new StringContent(requestBody, System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync(postUrl, content);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    await Task.Delay(5000);
-                    informationLabel.Text = "message sent and received by the server";
-                    await Task.Delay(2000);
-                    informationLabel.Text = string.Empty;
-                }
+                await Task.Delay(3000);
+                confirmationMessageLabel.Text = "message sent and received by the server";
+                await Task.Delay(1000);
+                confirmationMessageLabel.Text = string.Empty;
             }
-        }
-
-        private async Task UpdateChatAsync()
-        {
-            string getAllUrl = $"https://localhost:7236/api/Chat/{RoomId}";
-
-            using (HttpClient client = new HttpClient())
-            {
-                HttpResponseMessage response = client.GetAsync(getAllUrl).Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseData = await response.Content.ReadAsStringAsync();
-                    List<string>? messages = JsonSerializer.Deserialize<List<string>>(responseData);
-                    if (messages != null)
-                    {
-                        messageListTextBox.Text = string.Join("\n", messages);
-                    }
-                }
-            }
-
         }
     }
+
+    
 }
+
