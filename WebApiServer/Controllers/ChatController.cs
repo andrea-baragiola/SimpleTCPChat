@@ -20,14 +20,14 @@ namespace WebApiServer.Controllers
         [HttpGet("{roomId}")]
         public ActionResult<IEnumerable<string>> GetMessages(int roomId)
         {
-            return Ok(_chatStorage.ChatRoomDict[roomId].AllMessages);
+            return Ok(_chatStorage.GetRoomMessages(roomId));
         }
 
 
         [HttpPost("post")]
         public ActionResult PostMessage([FromBody] Message message)
         {
-            _chatStorage.ChatRoomDict[message.TargetRoomId].AllMessages.Add($"{message.MessageSender} :  {message.Content}");
+            _chatStorage.AddMessage(message);
             return Ok();
         }
     }

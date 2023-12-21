@@ -1,8 +1,10 @@
-﻿namespace WebApiServer.Storage
+﻿using WebApiServer.Models;
+
+namespace WebApiServer.Storage
 {
     public interface IChatStorage
     {
-        Dictionary<int, ChatRoom> ChatRoomDict { get; set; }
-
+        void AddMessage(Message message);
+        List<string> GetRoomMessages(int roomId);
     }
 }
