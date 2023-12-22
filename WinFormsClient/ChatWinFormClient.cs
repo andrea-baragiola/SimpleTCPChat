@@ -1,5 +1,6 @@
 using System.Text.Json;
 using WinFormsClient.APIClient;
+using WinFormsClient.Models;
 
 namespace WinFormsClient
 {
@@ -18,7 +19,7 @@ namespace WinFormsClient
             SenderName = senderName;
             senderNameLabel.Text = SenderName;
             _timer = new();
-            ActivateTimer(); 
+            ActivateTimer();
         }
 
         // Starts the timer that will trigger the periodic update of the chat
@@ -48,11 +49,12 @@ namespace WinFormsClient
             HttpResponseMessage response = await _chatAPIClient.GetMessagesAsync();
             if (response.IsSuccessStatusCode)
             {
+                JsonSerializerOptions options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                 string responseData = await response.Content.ReadAsStringAsync();
-                List<string>? messages = JsonSerializer.Deserialize<List<string>>(responseData);
+                IEnumerable<ClientMessage>? messages = JsonSerializer.Deserialize<IEnumerable<ClientMessage>>(responseData, options);
                 if (messages != null)
                 {
-                    messageListTextBox.Text = string.Join("\n", messages);
+                    messageListTextBox.Text = string.Join("\n", messages.Select(message => message.Content));
                 }
             }
         }
@@ -70,6 +72,6 @@ namespace WinFormsClient
         }
     }
 
-    
+
 }
 

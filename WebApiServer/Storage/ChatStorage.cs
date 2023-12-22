@@ -18,10 +18,10 @@ namespace WebApiServer.Storage
 
         public void AddMessage(Message message)
         {
-            ChatRoomDict[message.TargetRoomId].AllMessages.Add($"{message.MessageSender} :  {message.Content}");
+            ChatRoomDict[message.TargetRoomId].AllMessages.Add(message);
         }
 
-        public List<string> GetRoomMessages(int roomId)
+        public List<Message> GetRoomMessages(int roomId)
         {
             return ChatRoomDict[roomId].AllMessages;
         }

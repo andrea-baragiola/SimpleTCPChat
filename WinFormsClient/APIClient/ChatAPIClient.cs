@@ -26,6 +26,7 @@ namespace WinFormsClient.APIClient
                 HttpResponseMessage response = await client.PostAsync(postUrl, content);
                 return response;
             }
+
         }
 
         // gets messages from the server with a get request for the specific room ID of the client

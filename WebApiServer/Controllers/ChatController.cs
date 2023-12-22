@@ -18,7 +18,7 @@ namespace WebApiServer.Controllers
         }
 
         [HttpGet("{roomId}")]
-        public ActionResult<IEnumerable<string>> GetMessages(int roomId)
+        public ActionResult<IEnumerable<Message>> GetMessages(int roomId)
         {
             return Ok(_chatStorage.GetRoomMessages(roomId));
         }
