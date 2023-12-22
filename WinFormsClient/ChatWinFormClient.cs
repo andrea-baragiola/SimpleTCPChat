@@ -35,12 +35,19 @@ namespace WinFormsClient
             RefreshChatAsync();
         }
 
-        private void sendButton_Click(object sender, EventArgs e)
+        private async void sendButton_Click(object sender, EventArgs e)
         {
             string messageSender = senderNameLabel.Text;
             string messageContent = messageToSendTextBox.Text;
-            SendMessageAsync(messageSender, messageContent);
+            HttpResponseMessage response = await _chatAPIClient.SendAsync(messageSender, messageContent);
             messageToSendTextBox.Text = string.Empty;
+            if (response.IsSuccessStatusCode)  // provides delayed confirmation of sent message, without interrupting the main thread
+            {
+                await Task.Delay(3000);
+                confirmationMessageLabel.Text = "message sent and received by the server";
+                await Task.Delay(1000);
+                confirmationMessageLabel.Text = string.Empty;
+            }
         }
 
         // Reloads the messages of the chat
@@ -59,17 +66,6 @@ namespace WinFormsClient
             }
         }
 
-        private async Task SendMessageAsync(string messageSender, string messageContent)
-        {
-            HttpResponseMessage response = await _chatAPIClient.SendAsync(messageSender, messageContent);
-            if (response.IsSuccessStatusCode)  // provides delayed confirmation of sent message, without interrupting the main thread
-            {
-                await Task.Delay(3000);
-                confirmationMessageLabel.Text = "message sent and received by the server";
-                await Task.Delay(1000);
-                confirmationMessageLabel.Text = string.Empty;
-            }
-        }
     }
 
 

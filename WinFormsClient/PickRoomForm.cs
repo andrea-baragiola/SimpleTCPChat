@@ -47,7 +47,7 @@ namespace WinFormsClient
         private void roomsListBox_DoubleClick(object sender, EventArgs e)
         {
             int roomId = int.Parse(roomsListBox.SelectedItems[0].ToString());  // parse may be insecure
-            ChatWinFormClient chatWinFormClient = new(roomId,senderNameTextBox.Text);
+            ChatWinFormClient chatWinFormClient = new(roomId, senderNameTextBox.Text);
             chatWinFormClient.ShowDialog();
         }
     }

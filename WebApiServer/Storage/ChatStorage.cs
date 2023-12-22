@@ -10,7 +10,7 @@ namespace WebApiServer.Storage
         {
             ChatRoomDict = new()
             {
-                { 1, new ChatRoom() },
+                { 1, new ChatRoom() },   // default rooms
                 { 2, new ChatRoom() }
             };
 
