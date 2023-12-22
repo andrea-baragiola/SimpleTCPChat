@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace WinFormsClient.Models
+﻿namespace WinFormsClient.Models
 {
     public class ClientMessage
     {

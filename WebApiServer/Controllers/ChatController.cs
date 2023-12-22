@@ -23,11 +23,24 @@ namespace WebApiServer.Controllers
             return Ok(_chatStorage.GetRoomMessages(roomId));
         }
 
+        [HttpGet("rooms")]
+        public ActionResult<IEnumerable<int>> GetRoomsIds()
+        {
+            return Ok(_chatStorage.GetRoomsIds());
+        }
+
 
         [HttpPost("post")]
         public ActionResult PostMessage([FromBody] Message message)
         {
             _chatStorage.AddMessage(message);
+            return Ok();
+        }
+
+        [HttpPost("createroom")]
+        public ActionResult CreateRoom()
+        {
+            _chatStorage.AddRoom();
             return Ok();
         }
     }

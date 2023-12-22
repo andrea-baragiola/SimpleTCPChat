@@ -6,5 +6,7 @@ namespace WebApiServer.Storage
     {
         void AddMessage(Message message);
         List<Message> GetRoomMessages(int roomId);
+        void AddRoom();
+        List<int> GetRoomsIds();
     }
 }

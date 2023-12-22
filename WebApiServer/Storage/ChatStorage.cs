@@ -16,6 +16,11 @@ namespace WebApiServer.Storage
 
         }
 
+        public void AddRoom()
+        {
+            ChatRoomDict.Add(ChatRoomDict.Count+1, new ChatRoom());
+        }
+
         public void AddMessage(Message message)
         {
             ChatRoomDict[message.TargetRoomId].AllMessages.Add(message);
@@ -24,6 +29,11 @@ namespace WebApiServer.Storage
         public List<Message> GetRoomMessages(int roomId)
         {
             return ChatRoomDict[roomId].AllMessages;
+        }
+
+        public List<int> GetRoomsIds()
+        {
+            return ChatRoomDict.Keys.ToList();
         }
     }
 }

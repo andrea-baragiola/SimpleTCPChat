@@ -28,36 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            room1Button = new Button();
-            room2Button = new Button();
             senderNameTextBox = new TextBox();
             label1 = new Label();
-            label2 = new Label();
+            label3 = new Label();
+            roomsListBox = new ListBox();
+            createRoomButton = new Button();
             SuspendLayout();
-            // 
-            // room1Button
-            // 
-            room1Button.Location = new Point(69, 91);
-            room1Button.Name = "room1Button";
-            room1Button.Size = new Size(75, 23);
-            room1Button.TabIndex = 0;
-            room1Button.Text = "room1";
-            room1Button.UseVisualStyleBackColor = true;
-            room1Button.Click += room1Button_Click;
-            // 
-            // room2Button
-            // 
-            room2Button.Location = new Point(150, 91);
-            room2Button.Name = "room2Button";
-            room2Button.Size = new Size(75, 23);
-            room2Button.TabIndex = 1;
-            room2Button.Text = "room2";
-            room2Button.UseVisualStyleBackColor = true;
-            room2Button.Click += room2Button_Click;
             // 
             // senderNameTextBox
             // 
-            senderNameTextBox.Location = new Point(69, 38);
+            senderNameTextBox.Location = new Point(12, 27);
             senderNameTextBox.Name = "senderNameTextBox";
             senderNameTextBox.Size = new Size(100, 23);
             senderNameTextBox.TabIndex = 2;
@@ -66,31 +46,51 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(69, 20);
+            label1.Location = new Point(12, 9);
             label1.Name = "label1";
             label1.Size = new Size(98, 15);
             label1.TabIndex = 3;
             label1.Text = "Write your name:";
             // 
-            // label2
+            // label3
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(72, 73);
-            label2.Name = "label2";
-            label2.Size = new Size(73, 15);
-            label2.TabIndex = 4;
-            label2.Text = "Pick a room:";
+            label3.AutoSize = true;
+            label3.Location = new Point(12, 62);
+            label3.Name = "label3";
+            label3.Size = new Size(95, 15);
+            label3.TabIndex = 5;
+            label3.Text = "Available rooms:";
+            // 
+            // roomsListBox
+            // 
+            roomsListBox.FormattingEnabled = true;
+            roomsListBox.ItemHeight = 15;
+            roomsListBox.Location = new Point(12, 80);
+            roomsListBox.Name = "roomsListBox";
+            roomsListBox.Size = new Size(120, 169);
+            roomsListBox.TabIndex = 6;
+            roomsListBox.DoubleClick += roomsListBox_DoubleClick;
+            // 
+            // createRoomButton
+            // 
+            createRoomButton.Location = new Point(148, 80);
+            createRoomButton.Name = "createRoomButton";
+            createRoomButton.Size = new Size(75, 39);
+            createRoomButton.TabIndex = 7;
+            createRoomButton.Text = "Create New Room";
+            createRoomButton.UseVisualStyleBackColor = true;
+            createRoomButton.Click += createRoomButton_Click;
             // 
             // PickRoomForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(353, 202);
-            Controls.Add(label2);
+            ClientSize = new Size(353, 303);
+            Controls.Add(createRoomButton);
+            Controls.Add(roomsListBox);
+            Controls.Add(label3);
             Controls.Add(label1);
             Controls.Add(senderNameTextBox);
-            Controls.Add(room2Button);
-            Controls.Add(room1Button);
             Name = "PickRoomForm";
             Text = "PickSeverForm";
             ResumeLayout(false);
@@ -98,11 +98,10 @@
         }
 
         #endregion
-
-        private Button room1Button;
-        private Button room2Button;
         private TextBox senderNameTextBox;
         private Label label1;
-        private Label label2;
+        private Label label3;
+        private ListBox roomsListBox;
+        private Button createRoomButton;
     }
 }
