@@ -17,24 +17,11 @@ namespace WebApiServer.Controllers
             _chatStorage = chatStorage;
         }
 
-        [HttpGet("{roomId}")]
-        public ActionResult<IEnumerable<Message>> GetMessages(int roomId)
-        {
-            return Ok(_chatStorage.GetRoomMessages(roomId));
-        }
 
         [HttpGet("rooms")]
         public ActionResult<IEnumerable<int>> GetRoomsIds()
         {
             return Ok(_chatStorage.GetRoomsIds());
-        }
-
-
-        [HttpPost("post")]
-        public ActionResult PostMessage([FromBody] Message message)
-        {
-            _chatStorage.AddMessage(message);
-            return Ok();
         }
 
         [HttpPost("createroom")]
@@ -43,5 +30,36 @@ namespace WebApiServer.Controllers
             _chatStorage.AddRoom();
             return Ok();
         }
+
+        [HttpGet("{roomId}")]
+        public ActionResult<IEnumerable<Message>> GetMessages(int roomId)
+        {
+            try
+            {
+                IEnumerable<Message> messages = _chatStorage.GetRoomMessages(roomId);
+                return Ok(messages);
+            }
+            catch
+            {
+                return NotFound($"Impossibile to retrieve messages for room { roomId }");
+            }
+        }
+
+        [HttpPost("post")]
+        public ActionResult PostMessage([FromBody] Message message)
+        {
+            try
+            {
+                _chatStorage.AddMessage(message);
+                return Ok();
+            }
+            catch
+            {
+                return NotFound($"Impossibile to post messages into room {message.TargetRoomId}");
+            }
+
+
+        }
+
     }
 }
