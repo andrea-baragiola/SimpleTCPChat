@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 
-namespace SimpleTCPChatLibrary
+namespace SimpleServer
 {
     public class SimpleChatServer
     {
@@ -19,7 +19,7 @@ namespace SimpleTCPChatLibrary
 
             while (true)
             {
-                TcpClient client = tcpListener.AcceptTcpClient();
+                TcpClient client = tcpListener.AcceptTcpClient();  // stato base del server
                 clients.Add(client);
 
                 // Gestisci il client in un thread separato
@@ -30,9 +30,9 @@ namespace SimpleTCPChatLibrary
         private void HandleClient(TcpClient client)
         {
             StreamReader reader = new StreamReader(client.GetStream());
-            StreamWriter writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
+            //StreamWriter writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
 
-            writer.WriteLine("Benvenuto nella chat!");
+            //writer.WriteLine("Benvenuto nella chat!");
 
             while (client.Connected)
             {
@@ -55,7 +55,7 @@ namespace SimpleTCPChatLibrary
             foreach (TcpClient client in clients)
             {
                 StreamWriter writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
-                writer.WriteLine(message);
+                writer.WriteLineAsync(message);
             }
         }
     }

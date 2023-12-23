@@ -1,22 +1,57 @@
 ﻿// Client
-using System;
-using SimpleTCPChatLibrary;
+using SimpleClient;
 
-Console.Write("Inserisci l'indirizzo IP del server: ");
-string serverIp = Console.ReadLine();
+// chiedere informazioni
+Console.Write("Inserisci tuo nome: ");
+string name = Console.ReadLine();
 
-SimpleChatClient chatClient = new SimpleChatClient();
-chatClient.MessageReceived += (message) => Console.WriteLine(message);
+// istanziare client
+SimpleChatClient chatClient = new(name);
 
-// Connessione al server
-chatClient.Connect(serverIp, 8888);
-
-// Loop per inviare messaggi al server
-while (true)
+// Write all existing messages
+foreach (string message in chatClient.Messages)
 {
-    Console.Write("Messaggio: ");
-    string message = Console.ReadLine();
+    Console.WriteLine(message);
+}
 
-    // Invia il messaggio al server
-    chatClient.SendMessage(message);
+
+// Avvia il thread per eseguire la GET request ogni 2 secondi
+Thread getRequestThread = new Thread(() => PerformGetRequestEveryFiveSeconds(chatClient));
+getRequestThread.Start();
+
+
+// Avvia il thread per inviare messaggi
+Thread sendMessagesThread = new Thread(() => MessageWriter(chatClient));
+sendMessagesThread.Start();
+
+// ---------------------------------------------
+// ---------------------------------------------
+// ---------------------------------------------
+// ---------------------------------------------
+// ---------------------------------------------
+
+static void PerformGetRequestEveryFiveSeconds(SimpleChatClient chatClient)
+{
+    while (true)
+    {
+        chatClient.AddNewMessages();
+        Console.Clear();
+        foreach (string message in chatClient.Messages)
+        {
+            Console.WriteLine(message);
+        }
+        Thread.Sleep(5000);
+    }
+}
+
+static void MessageWriter(SimpleChatClient chatClient)
+{
+    while (true)
+    {
+        string newMessage = Console.ReadLine();
+        //Console.SetCursorPosition(0, Console.CursorTop - 1);
+        //Console.WriteLine("                                   ");
+        //Console.SetCursorPosition(0, Console.CursorTop - 1);
+        chatClient.SendMessage(newMessage);
+    }
 }
