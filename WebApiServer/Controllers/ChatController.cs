@@ -55,7 +55,7 @@ namespace WebApiServer.Controllers
             }
             catch
             {
-                return NotFound($"Impossibile to post messages into room {message.TargetRoomId}");
+                return NotFound($"Impossibile to post messages into room {message.RoomId}");
             }
 
 

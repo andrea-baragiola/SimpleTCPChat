@@ -3,14 +3,14 @@
     public class ClientMessage
     {
         public string MessageSender { get; set; }
-        public string Content { get; set; }
-        public int TargetRoomId { get; set; }
+        public string MessageContent { get; set; }
+        public int RoomId { get; set; }
 
-        public ClientMessage(string messageSender, string content, int targetRoomId)
+        public ClientMessage(string messageSender, string messageContent, int roomId)
         {
             MessageSender = messageSender;
-            Content = content;
-            TargetRoomId = targetRoomId;
+            MessageContent = messageContent;
+            RoomId = roomId;
         }
     }
 }

@@ -61,7 +61,7 @@ namespace WinFormsClient
                 IEnumerable<ClientMessage>? messages = JsonSerializer.Deserialize<IEnumerable<ClientMessage>>(responseData, options);
                 if (messages != null)
                 {
-                    messageListTextBox.Text = string.Join("\n", messages.Select(message => $"{message.MessageSender} : {message.Content}"));
+                    messageListTextBox.Text = string.Join("\n", messages.Select(message => $"{message.MessageSender} : {message.MessageContent}"));
                 }
             }
         }
