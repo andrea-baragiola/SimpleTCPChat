@@ -35,5 +35,10 @@ namespace WebApiServer.Storage
         {
             return ChatRoomDict.Keys.ToList();
         }
+
+        public void CreateTables()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

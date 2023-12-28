@@ -15,6 +15,7 @@ namespace WebApiServer.Controllers
         public ChatController(IChatStorage chatStorage)
         {
             _chatStorage = chatStorage;
+            _chatStorage.CreateTables();
         }
 
 
