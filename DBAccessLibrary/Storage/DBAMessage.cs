@@ -1,6 +1,6 @@
-﻿namespace WebApiServer.Models
+﻿namespace DBAccessLibrary.Storage
 {
-    public class Message
+    public class DBAMessage
     {
         public string MessageSender { get; set; }
         public string MessageContent { get; set; }

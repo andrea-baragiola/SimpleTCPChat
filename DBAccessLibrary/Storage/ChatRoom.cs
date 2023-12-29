@@ -1,10 +1,8 @@
-﻿using WebApiServer.Models;
-
-namespace WebApiServer.Storage
+﻿namespace DBAccessLibrary.Storage
 {
     public class ChatRoom
     {
-        public List<Message> AllMessages { get; set; }
+        public List<DBAMessage> AllMessages { get; set; }
         public int RoomId { get; set; }
 
 
