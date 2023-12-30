@@ -1,9 +1,7 @@
-﻿using Microsoft.Data.SqlClient;
-using Dapper;
-using Microsoft.Extensions.Configuration;
+﻿using Dapper;
+using System.Data.SqlClient;
 
-
-namespace DBAccessLibrary.Storage
+namespace WebApiServer.Storage
 {
     public class DataContext
     {

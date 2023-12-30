@@ -1,4 +1,6 @@
-﻿namespace DBAccessLibrary.Storage
+﻿using WebApiServer.Models;
+
+namespace WebApiServer.Storage
 {
     public class ChatStorage : IChatStorage
     {
@@ -16,15 +18,15 @@
 
         public void AddRoom()
         {
-            ChatRoomDict.Add(ChatRoomDict.Count + 1, new ChatRoom());
+            ChatRoomDict.Add(ChatRoomDict.Count+1, new ChatRoom());
         }
 
-        public void AddMessage(DBAMessage message)
+        public void AddMessage(Message message)
         {
             ChatRoomDict[message.RoomId].AllMessages.Add(message);
         }
 
-        public List<DBAMessage> GetRoomMessages(int roomId)
+        public List<Message> GetRoomMessages(int roomId)
         {
             return ChatRoomDict[roomId].AllMessages;
         }

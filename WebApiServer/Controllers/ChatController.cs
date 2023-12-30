@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApiServer.Models;
-using DBAccessLibrary.Storage;
-using AutoMapper;
-using Microsoft.Data.SqlClient;
+using WebApiServer.Storage;
 
 
 namespace WebApiServer.Controllers
@@ -13,14 +11,10 @@ namespace WebApiServer.Controllers
     public class ChatController : ControllerBase
     {
         private readonly IChatStorage _chatStorage;
-        private readonly IMapper _mapper;
 
-        public ChatController(IChatStorage chatStorage, IMapper mapper)
+        public ChatController(IChatStorage chatStorage)
         {
             _chatStorage = chatStorage;
-            _mapper = mapper;
-
-
         }
 
 
@@ -38,27 +32,25 @@ namespace WebApiServer.Controllers
         }
 
         [HttpGet("{roomId}")]
-        public ActionResult<IEnumerable<APIMessage>> GetMessages(int roomId)
+        public ActionResult<IEnumerable<Message>> GetMessages(int roomId)
         {
             try
             {
-                IEnumerable<DBAMessage> messages = _chatStorage.GetRoomMessages(roomId);
-                var apiMessages = _mapper.Map<IEnumerable<APIMessage>>(messages);
-                return Ok(apiMessages);
+                IEnumerable<Message> messages = _chatStorage.GetRoomMessages(roomId);
+                return Ok(messages);
             }
             catch
             {
-                return NotFound($"Impossible to retrieve messages for room {roomId}");
+                return NotFound($"Impossibile to retrieve messages for room { roomId }");
             }
         }
 
         [HttpPost("post")]
-        public ActionResult PostMessage([FromBody] APIMessage message)
+        public ActionResult PostMessage([FromBody] Message message)
         {
             try
             {
-                var dbaMessage = _mapper.Map<DBAMessage>(message);
-                _chatStorage.AddMessage(dbaMessage);
+                _chatStorage.AddMessage(message);
                 return Ok();
             }
             catch

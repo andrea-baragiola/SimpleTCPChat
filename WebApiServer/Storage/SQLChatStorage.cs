@@ -1,8 +1,9 @@
-﻿using Dapper;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
+﻿using WebApiServer.Models;
+using System.Data.SqlClient;
+using Dapper;
 
-namespace DBAccessLibrary.Storage
+
+namespace WebApiServer.Storage
 {
     public class SQLChatStorage : IChatStorage
     {
@@ -36,7 +37,7 @@ namespace DBAccessLibrary.Storage
         }
 
 
-        public void AddMessage(DBAMessage message)
+        public void AddMessage(Message message)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -49,13 +50,13 @@ namespace DBAccessLibrary.Storage
         }
 
 
-        public List<DBAMessage> GetRoomMessages(int roomId)
+        public List<Message> GetRoomMessages(int roomId)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
                 string query = $"SELECT * FROM MessagesTable WHERE roomId = {roomId};";
-                IEnumerable<DBAMessage> messages = connection.Query<DBAMessage>(query);
+                IEnumerable<Message> messages = connection.Query<Message>(query);
                 return messages.ToList();
             }
         }

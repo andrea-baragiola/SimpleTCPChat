@@ -1,6 +1,4 @@
-using DBAccessLibrary.Storage;
-using Microsoft.AspNetCore.Hosting;
-using WebApiServer;
+using WebApiServer.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +10,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IChatStorage, SQLChatStorage>();
 builder.Services.AddSingleton<DataContext>();
-builder.Services.AddAutoMapper(typeof(MappingProfile));
-
 
 var app = builder.Build();
 
